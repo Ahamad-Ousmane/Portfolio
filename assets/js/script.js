@@ -174,3 +174,38 @@ for (let i = 0; i < navigationLinks.length; i++) {
   });
 }
 
+
+// Variables pour la modal d'image
+const modalImageContainer = document.querySelector("[data-modal-image-container]");
+const modalImageCloseBtn = document.querySelector("[data-modal-image-close-btn]");
+const modalImage = document.querySelector("[data-modal-image]");
+const overlaysecond = document.querySelector("[data-overlaysecond]");
+
+// Fonction pour ouvrir/fermer la modal d'image
+const toggleImageModal = function () {
+  modalImageContainer.classList.toggle("active");
+  overlaysecond.classList.toggle("active");
+};
+
+// Ajouter un écouteur d'événement à toutes les icônes "eye-outline"
+const projectIcons = document.querySelectorAll(".project-item-icon-box");
+
+projectIcons.forEach((icon) => {
+  icon.addEventListener("click", function (event) {
+    event.preventDefault(); // Empêcher le comportement par défaut du lien
+    const projectItem = this.closest(".project-item");
+    const imageSrc = projectItem.querySelector("img").src;
+    const imageAlt = projectItem.querySelector("img").alt;
+
+    // Mettre à jour l'image dans la modal
+    modalImage.src = imageSrc;
+    modalImage.alt = imageAlt;
+
+    // Ouvrir la modal
+    toggleImageModal();
+  });
+});
+
+// Fermer la modal en cliquant sur le bouton de fermeture ou l'overlay
+modalImageCloseBtn.addEventListener("click", toggleImageModal);
+overlaysecond.addEventListener("click", toggleImageModal);
